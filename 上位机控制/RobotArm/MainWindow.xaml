@@ -1,0 +1,119 @@
+﻿<Window x:Class="RobotArm.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RobotArm"
+        xmlns:servo="clr-namespace:RobotArm.servo"
+        mc:Ignorable="d"
+        Title="开源uHand V1.0" Height="650" Width="1520" MouseDown="Window_MouseDown">
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.3*"/>
+        </Grid.ColumnDefinitions>
+        <Border BorderThickness="1" BorderBrush="LightBlue" Grid.Column="0" Margin="5">
+            <Canvas x:Name="servosView">
+                <Image Source="/Resources/robot.png" Width="530" Stretch="Uniform" Canvas.Left="20"/>
+                <servo:ServoView x:Name="servo1" ServoId="1" Width="106" Height="78" Canvas.Left="414" Canvas.Top="421"   MinAngle="900" MaxAngle="2000" CurAngle="1500"/>
+                <servo:ServoView x:Name="servo2" ServoId="2" Width="106" Height="78" Canvas.Left="309" Canvas.Top="280"  MinAngle="900" MaxAngle="2000" CurAngle="1500"/>
+                <servo:ServoView x:Name="servo3" ServoId="3" Width="106" Height="78" Canvas.Left="219" Canvas.Top="144" MinAngle="900" MaxAngle="2000" CurAngle="1500"/>
+                <servo:ServoView x:Name="servo4" ServoId="4" Width="106" Height="78" Canvas.Left="133" Canvas.Top="227" MinAngle="900" MaxAngle="2000" CurAngle="1500"/>
+                <servo:ServoView x:Name="servo5" ServoId="5" Width="106" Height="78" Canvas.Left="39" Canvas.Top="324" MinAngle="900" MaxAngle="2000" CurAngle="1500"/>
+                <servo:ServoView x:Name="servo6" ServoId="6" Width="106" Height="78" Canvas.Left="187" Canvas.Top="516" MinAngle="500" MaxAngle="2500" CurAngle="1500"/>
+            </Canvas>
+        </Border>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1.5*"/>
+                <RowDefinition Height="0.6*"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="actionList" Grid.ColumnSpan="5" Grid.Row="0" Margin="5" AutoGenerateColumns="False" GridLinesVisibility="All" CanUserAddRows="False" SelectionMode="Single"  CanUserResizeColumns="False" CanUserResizeRows="False" CurrentCellChanged="onCellChange">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Width="50" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Stretch="None" Source="{Binding IndexPath,UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="编号" Width="50" Binding="{Binding Path=itemID}" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="时间(ms)" Width="120" Binding="{Binding Path=servoTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="ID:1" Width="120" Binding="{Binding Path=servoAngles[0], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="ID:2" Width="120" Binding="{Binding Path=servoAngles[1], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="ID:3" Width="120" Binding="{Binding Path=servoAngles[2], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="ID:4" Width="120" Binding="{Binding Path=servoAngles[3], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="ID:5" Width="120" Binding="{Binding Path=servoAngles[4], Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+            <Border BorderThickness="1" BorderBrush="LightBlue"  Grid.ColumnSpan="5" Grid.Row="1" Margin="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="动作时间" Margin="20"/>
+                    <TextBox x:Name="actionTime" Text="1000" Width="50" Margin="0,20,30,20"/>
+                    <Button Content="添加动作" Margin="20,15,20,15" Width="100" Click="addAction"/>
+                    <Button Content="删除动作" Margin="20,15,20,15" Width="100" Click="deleteAction"/>
+                    <Button Content="更新动作" Margin="20,15,20,15" Width="100" Click="updateAction"/>
+                    <Button Content="插入动作" Margin="20,15,20,15" Width="100" Click="insertAction"/>
+                </StackPanel>
+            </Border>
+            <TextBlock x:Name="filePath" Margin="5" Grid.ColumnSpan="4" Grid.Row="2"/>
+            <Border BorderThickness="1" BorderBrush="LightBlue"  Grid.Column="0" Grid.Row="3" Margin="5">
+                <Canvas>
+                    <TextBlock Text="COM:" Canvas.Left="10" Canvas.Top="46"/>
+                    <ComboBox x:Name="SerialCom" Height="25px" Width="80px" Canvas.Left="70" Canvas.Top="40" DropDownOpened="ShowSerialCom"/>
+                    <TextBlock x:Name="BaudTB" Text="波特率:" Canvas.Left="10" Canvas.Top="93"/>
+                    <ComboBox x:Name="BaudRate" Height="25px" Width="80px" Canvas.Left="70" Canvas.Top="93" SelectionChanged="baudChange"/>
+                    <Image x:Name="ConnectLed" Height="30px" Source="/Resources/red.png" Canvas.Left="10" Canvas.Top="150"/>
+                    <Button x:Name="OpenCloseBtn" Content="打开串口" Height="30px" Width="80px" Canvas.Left="70" Canvas.Top="150" Click="OpenComm">
+                    </Button>
+                </Canvas>
+            </Border>
+            <Canvas Grid.Column="1" Grid.Row="3">
+                <GroupBox  Canvas.Top="4" Height="120" Width="151"/>
+                <CheckBox x:Name="loopCheck" Content="循环" HorizontalAlignment="Left" Margin="32,25,0,0" VerticalAlignment="Top" Height="20" Width="55"/>
+                <Button x:Name="runOnline" Content="在线运行" Canvas.Left="28" Canvas.Top="70" Width="108" Height="40" Click="runOnlineBT"/>
+                <Button  Content="复位舵机" Canvas.Left="20" Canvas.Top="153" Width="113" Height="45" Click="resetServo"/>
+            </Canvas>
+            <Border BorderThickness="1" BorderBrush="LightBlue"  Grid.Column="2" Grid.Row="3" Margin="5">
+                <StackPanel Orientation="Vertical">
+                    <Button  Content="打开文件" Margin="25,30" Height="48" Click="openFile"/>
+                    <Button  Content="保存文件" Margin="25" Height="48" Click="saveFile"/>
+                </StackPanel>
+            </Border>
+
+            <Border BorderThickness="1" BorderBrush="LightBlue"  Grid.Column="3" Grid.Row="3" Margin="5">
+                <Canvas>
+                    <TextBlock  Canvas.Left="9" TextWrapping="Wrap" Text="动作组:" Canvas.Top="23"/>
+                    <ComboBox x:Name="actionNum" Canvas.Left="62" Canvas.Top="14" Width="93" Height="30" SelectionChanged="actionIDChange"/>
+                    <Button x:Name="downLoad" Content="下载" Canvas.Left="9" Canvas.Top="64" Width="146" Height="40" Click="downLoadBT"/>
+                    <Button x:Name="eraseAll" Content="全部擦除" Canvas.Left="9" Canvas.Top="113" Width="146" Height="36" Click="eraseAllBT"/>
+                    <Button x:Name="runAction" Content="动作组运行" Canvas.Left="9" Canvas.Top="162" Width="70" Height="40" Click="runActionBT"/>
+                    <Button x:Name="stopAction" Content="停止" Canvas.Left="93" Canvas.Top="162" Width="60" Height="40" Click="stopActionBT"/>
+                </Canvas>
+            </Border>
+            <Border BorderThickness="1" BorderBrush="LightBlue"  Grid.Column="4" Grid.Row="3" Margin="5">
+                <Canvas>
+                    <DataGrid x:Name="downloadList" Width="47" GridLinesVisibility="None" Height="210" Canvas.Left="2" Canvas.Top="2">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="编号" Width="50" Binding="{Binding ActionNum}" IsReadOnly="True"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button x:Name="openMany"  Content="批量打开" Height="40"  Click="openManyFileClick" Canvas.Left="63" Canvas.Top="53" Width="92"/>
+                    <Button x:Name="downLoadMany"  Grid.Row="1" Content="批量下载" Height="40"  Click="downManyFileClick" Canvas.Left="63" Canvas.Top="118" Width="92"/>
+                </Canvas>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

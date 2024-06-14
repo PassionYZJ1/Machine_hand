@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RobotArm"
         xmlns:servo="clr-namespace:RobotArm.servo"
         mc:Ignorable="d"
-        Title="开源uHand V1.0" Height="650" Width="1520" MouseDown="Window_MouseDown">
+        Title="机器人课程设计机械手" Height="650" Width="1520" MouseDown="Window_MouseDown">
 
 
     <Grid>

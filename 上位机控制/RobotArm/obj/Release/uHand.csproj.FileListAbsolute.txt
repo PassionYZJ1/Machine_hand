@@ -1,0 +1,17 @@
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\bin\Release\uHand.exe.config
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\bin\Release\uHand.exe
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\bin\Release\uHand.pdb
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand.csprojResolveAssemblyReference.cache
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\MainWindow.g.cs
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\servo\ServoView.g.cs
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\App.g.cs
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\GeneratedInternalTypeHelper.g.cs
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand_MarkupCompile.cache
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand_MarkupCompile.lref
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\MainWindow.baml
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\servo\ServoView.baml
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand.g.resources
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\RobotArm.Properties.Resources.resources
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand.csproj.GenerateResource.Cache
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand.exe
+E:\2017工程项目\开源机械臂\开源uHand\uHand\RobotArm\obj\Release\uHand.pdb

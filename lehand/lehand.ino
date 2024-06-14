@@ -1,8 +1,6 @@
 /*
-@company: Hiwonder
-@date:    2024-03-01
-@version:  2.0
-@description: 体感手套控制程序
+@date:    2024-06-10
+@description: 体感手套控制
 */
 
 #include <SoftwareSerial.h> //软串口库

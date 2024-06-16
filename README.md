@@ -20,7 +20,7 @@
 
 ### 环境配置
 
-- 采用Visual stduio 2015的WPF框架实现，只需下载VS2015社区版，打开RobotArm.sln运行即可，推荐在Debug或Release生成解决方案，打开生成的exe文件即可使用。
+- 采用Visual studio 2015的WPF框架实现，只需下载VS2015社区版，打开RobotArm.sln运行即可，推荐在Debug或Release生成解决方案，打开生成的exe文件即可使用。
 
 
 ## 体感手套控制
